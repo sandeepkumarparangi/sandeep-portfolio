@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Abstract Java code background">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#101b17"/>
+      <stop offset="0.48" stop-color="#0c1714"/>
+      <stop offset="1" stop-color="#13211d"/>
+    </linearGradient>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <g filter="url(#blur)" opacity="0.55">
+    <circle cx="300" cy="160" r="180" fill="#f28c38"/>
+    <circle cx="1280" cy="700" r="220" fill="#47d18c"/>
+    <circle cx="1180" cy="180" r="150" fill="#7fc7ff"/>
+  </g>
+  <g fill="none" stroke="#d3f8e6" stroke-opacity="0.1">
+    <path d="M120 160h520v120H120zM820 120h560v120H820zM210 410h440v120H210zM880 430h470v120H880zM140 690h570v120H140z"/>
+    <path d="M160 220h170m42 0h220M860 180h180m40 0h260M250 470h190m42 0h120M930 490h140m36 0h190M190 750h230m42 0h180"/>
+  </g>
+  <g font-family="SFMono-Regular, Consolas, monospace" font-size="32" fill="#e9fff4" opacity="0.18">
+    <text x="155" y="205">public class PlatformService {</text>
+    <text x="860" y="166">@SpringBootApplication</text>
+    <text x="245" y="456">KafkaTemplate&lt;String, Event&gt;</text>
+    <text x="925" y="476">Mono&lt;OrderResponse&gt;</text>
+    <text x="185" y="736">docker build -t service .</text>
+  </g>
+  <g stroke="#47d18c" stroke-width="2" stroke-opacity="0.22" fill="none">
+    <path d="M350 280 C520 370 610 270 760 350 S1060 480 1220 360"/>
+    <path d="M280 620 C460 560 640 650 820 590 S1170 540 1320 660"/>
+  </g>
+</svg>

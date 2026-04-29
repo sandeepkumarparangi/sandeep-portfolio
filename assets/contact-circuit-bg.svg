@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 700" role="img" aria-label="Light circuit contact background">
+  <rect width="1600" height="700" fill="#f6f0e8"/>
+  <g fill="none" stroke="#13201c" stroke-width="3" stroke-opacity="0.13">
+    <path d="M120 220h250v110h270v-90h210"/>
+    <path d="M920 150h210v140h330"/>
+    <path d="M210 510h340V390h180"/>
+    <path d="M920 480h190v-80h260"/>
+  </g>
+  <g fill="#b55b16" opacity="0.16">
+    <circle cx="120" cy="220" r="14"/>
+    <circle cx="850" cy="240" r="14"/>
+    <circle cx="1460" cy="290" r="14"/>
+    <circle cx="730" cy="390" r="14"/>
+    <circle cx="1370" cy="400" r="14"/>
+  </g>
+  <g font-family="SFMono-Regular, Consolas, monospace" font-size="30" fill="#13201c" opacity="0.11">
+    <text x="165" y="185">connect()</text>
+    <text x="1010" y="120">mailto:</text>
+    <text x="260" y="575">Iowa, USA</text>
+  </g>
+</svg>

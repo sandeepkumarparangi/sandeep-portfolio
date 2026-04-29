@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Cloud microservices architecture background">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#081114"/>
+      <stop offset="0.55" stop-color="#111a1d"/>
+      <stop offset="1" stop-color="#20180f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#7fc7ff" stroke-opacity="0.2" stroke-width="4">
+      <path d="M345 450H590M720 450h220M1070 450h210M590 300V600M940 300V600"/>
+      <path d="M345 250h310v140H345zM345 510h310v140H345zM810 250h310v140H810zM810 510h310v140H810z"/>
+    </g>
+    <g stroke="#47d18c" stroke-opacity="0.32" stroke-width="4">
+      <path d="M1240 365c-9-70-70-124-144-124-50 0-94 25-120 64-17-10-37-16-59-16-63 0-114 51-114 114 0 9 1 17 3 25-55 15-95 64-95 124 0 71 58 129 129 129h389c87 0 157-70 157-157 0-80-60-147-146-159z"/>
+    </g>
+  </g>
+  <g font-family="SFMono-Regular, Consolas, monospace" font-size="30" fill="#e9fff4" opacity="0.18">
+    <text x="405" y="330">API</text>
+    <text x="392" y="590">Kafka</text>
+    <text x="868" y="330">Redis</text>
+    <text x="890" y="590">EKS</text>
+    <text x="960" y="480">AWS CloudWatch</text>
+  </g>
+  <g fill="#f28c38" opacity="0.18">
+    <circle cx="345" cy="450" r="16"/>
+    <circle cx="655" cy="450" r="16"/>
+    <circle cx="810" cy="450" r="16"/>
+    <circle cx="1120" cy="450" r="16"/>
+    <circle cx="1280" cy="450" r="16"/>
+  </g>
+</svg>
