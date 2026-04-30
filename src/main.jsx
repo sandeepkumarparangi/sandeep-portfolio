@@ -35,7 +35,7 @@ const navItems = [
   ["Contact", "contact"]
 ];
 
-const typingWords = ["Java", "Spring Boot", "Kafka", "AWS", "Microservices"];
+const typingWords = ["Java", "Spring Boot", "Angular", "React", "AWS", "Kafka", "Secure APIs"];
 
 const skills = [
   {
@@ -56,8 +56,8 @@ const skills = [
     title: "Cloud",
     icon: Cloud,
     accent: "from-sky-300 to-indigo-500",
-    items: ["AWS EKS", "S3", "Lambda", "EC2", "CloudWatch", "DynamoDB", "RDS"],
-    level: 88
+    items: ["AWS EKS", "S3", "Lambda", "EC2", "CloudWatch", "DynamoDB", "RDS", "CloudFormation"],
+    level: 90
   },
   {
     title: "Platforms",
@@ -70,45 +70,54 @@ const skills = [
     title: "Data",
     icon: Database,
     accent: "from-amber-300 to-rose-500",
-    items: ["MySQL", "PostgreSQL", "Oracle", "MongoDB", "Query tuning", "Data modeling"],
+    items: ["MySQL", "PostgreSQL", "Oracle", "SQL Server", "DynamoDB", "Redshift", "Athena", "Query tuning"],
     level: 84
   },
   {
     title: "AI Integration",
     icon: Cpu,
     accent: "from-purple-300 to-cyan-400",
-    items: ["LLM APIs", "RAG", "Python ML", "AI recommendations", "Automation", "Observability"],
-    level: 78
+    items: ["Generative AI", "AI agents", "SageMaker", "Python ML", "Demand forecasting", "Recommendation engines"],
+    level: 82
   }
 ];
 
 const experience = [
   {
     period: "Mar 2025 - Present",
-    role: "Full Stack Java Developer",
+    role: "Software Development Engineer",
     company: "Costco Wholesale IT",
     summary:
-      "Modernizing retail order, inventory, and warehouse orchestration with resilient Spring Boot services, React interfaces, Kafka streams, Redis caching, AWS EKS, and observability.",
-    metrics: ["35% throughput gain", "28% dashboard latency reduction", "30% MTTR reduction"],
-    tags: ["Spring Boot", "React", "Kafka", "AWS EKS", "Kubernetes"]
+      "Engineering high-volume retail microservices for order fulfillment, inventory reconciliation, member dashboards, and AI-powered demand forecasting across hybrid cloud environments.",
+    metrics: ["32% throughput gain", "18% cart conversion lift", "35% defect reduction"],
+    tags: ["Java", "Spring Boot", "Kafka", "AWS SageMaker", "React", "EKS"]
   },
   {
     period: "Sep 2021 - May 2023",
     role: "Software Engineer",
     company: "Virtusa | British Telecom",
     summary:
-      "Built high-volume telecom provisioning services, secure APIs, Angular customer portals, Kafka event streams, Jenkins pipelines, and PostgreSQL performance improvements.",
-    metrics: ["45% processing latency reduction", "40% release cycle reduction", "Millions of requests monthly"],
-    tags: ["Angular", "OAuth2", "Kafka", "PostgreSQL", "Jenkins"]
+      "Designed telecom order-management microservices, Angular service portals, Kafka billing integrations, Azure-ready workloads, and optimized PostgreSQL reporting flows.",
+    metrics: ["40% less manual handling", "30% reconciliation delay cut", "500K+ subscribers supported"],
+    tags: ["Java", "Spring Boot", "Angular", "Kafka", "PostgreSQL", "Azure"]
   },
   {
     period: "Aug 2020 - Sep 2021",
-    role: "Associate Engineer",
+    role: "Associate Engineer - Technology",
     company: "Virtusa | Citi Bank",
     summary:
-      "Developed secure banking transaction services, REST integrations, Angular dashboards, RBAC workflows, microservice migration support, and robust automated testing.",
-    metrics: ["85% test coverage", "RBAC security model", "Microservices migration"],
-    tags: ["Spring Security", "Hibernate", "JUnit", "Mockito", "Oracle"]
+      "Developed secure banking APIs, fraud-monitoring validation services, audit-ready backend logging, React reporting dashboards, and database optimization for settlement workflows.",
+    metrics: ["20% settlement time cut", "Audit traceability", "High-volume transaction APIs"],
+    tags: ["Java", "Spring MVC", "JWT", "React", "Oracle", "SQL Server"]
+  },
+  {
+    period: "Jul 2018 - Jul 2020",
+    role: "Software Developer",
+    company: "Insight Global",
+    summary:
+      "Built Java and Spring Boot workforce-management services, C++ data-processing utilities, responsive React interfaces, payroll integrations, and monitored Docker/Jenkins release flows.",
+    metrics: ["25% compute time reduction", "High-concurrency MySQL tuning", "Standardized release cycles"],
+    tags: ["Java", "Spring Boot", "C++", "React", "Docker", "Jenkins"]
   }
 ];
 
@@ -116,22 +125,22 @@ const projects = [
   {
     title: "Retail Inventory Orchestration",
     description:
-      "Cloud-native inventory and order coordination platform using Spring Boot, Kafka, Redis, and AWS EKS for high-throughput retail workloads.",
-    stack: ["Java", "Spring Boot", "Kafka", "Redis", "AWS EKS"],
+      "Cloud-native order fulfillment and inventory reconciliation platform using Java, Spring Boot, Kafka, Docker, Kubernetes, and AWS EKS for retail-scale operations.",
+    stack: ["Java", "Spring Boot", "Kafka", "Docker", "AWS EKS"],
     icon: Rocket
   },
   {
     title: "Event-Driven Billing Pipeline",
     description:
-      "Asynchronous billing and fulfillment workflow that reduced distributed processing delays with Kafka topics, resilient consumers, and traceable event contracts.",
-    stack: ["Kafka", "Microservices", "PostgreSQL", "Docker"],
+      "Asynchronous telecom billing and CRM synchronization workflow that reduced reconciliation delays through Kafka topics, resilient consumers, and traceable event contracts.",
+    stack: ["Kafka", "Microservices", "PostgreSQL", "Azure"],
     icon: Zap
   },
   {
-    title: "AI-Assisted Product Intelligence",
+    title: "AI Product Intelligence",
     description:
-      "LLM and RAG-enhanced recommendation layer for extracting signals from customer, product, and inventory data while keeping service boundaries clean.",
-    stack: ["OpenAI APIs", "RAG", "Python", "Spring Boot"],
+      "Recommendation and demand-forecasting layer using AWS SageMaker, Python inference APIs, Lambda, S3, and event-driven architecture to personalize product experiences.",
+    stack: ["SageMaker", "Python", "AWS Lambda", "S3"],
     icon: Cpu
   },
   {
@@ -140,14 +149,23 @@ const projects = [
       "Secure customer-facing provisioning UI and service layer for large-scale telecom workflows with OAuth2, Angular, and optimized relational queries.",
     stack: ["Angular", "OAuth2", "Java", "PostgreSQL"],
     icon: BriefcaseBusiness
+  },
+  {
+    title: "Banking Fraud & Reporting APIs",
+    description:
+      "Secure REST APIs, JWT authentication, rule-based fraud validation, audit-ready logging, and React reporting dashboards for digital banking operations.",
+    stack: ["Java", "Spring MVC", "JWT", "React", "Oracle"],
+    icon: Database
   }
 ];
 
 const achievements = [
-  ["AWS Certified Developer Associate", "Cloud-native development, deployment, monitoring, and reliability."],
-  ["5+ years building production platforms", "Retail, telecom, banking, and distributed enterprise systems."],
-  ["Performance engineering impact", "Throughput, latency, release cadence, and MTTR improvements across services."],
-  ["M.S. Computer Information Systems", "University of Central Missouri, Dec 2024."]
+  ["AWS Certified Developer - Associate", "Issued Mar 2025, focused on cloud-native development, deployment, monitoring, and reliability."],
+  ["Databricks Generative AI Fundamentals", "Academy accreditation in Generative AI fundamentals, issued Apr 2026."],
+  ["Databricks AI Agent Fundamentals", "Academy accreditation in AI agent fundamentals, issued Apr 2026."],
+  ["Walmart Advanced Software Engineering Simulation", "Forage job simulation, issued Jun 2025."],
+  ["M.S. Computer and Information Systems Security", "University of Central Missouri."],
+  ["M.Tech Computer Software Engineering", "Vellore Institute of Technology."]
 ];
 
 function cn(...classes) {
@@ -323,14 +341,16 @@ function Hero() {
         <motion.div initial={{ opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="relative z-10">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100 shadow-glow backdrop-blur">
             <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_18px_rgba(110,231,183,0.9)]" />
-            Senior Java Full Stack Developer
+            Open to work: West Des Moines | On-site & Hybrid
           </div>
           <h1 className="max-w-5xl font-display text-5xl font-extrabold leading-[1.02] text-white sm:text-6xl lg:text-7xl">
             Sandeep Kumar Parangi
           </h1>
-          <p className="mt-5 max-w-3xl text-2xl font-bold text-slate-100 sm:text-3xl">Senior Java Full Stack Developer</p>
+          <p className="mt-5 max-w-3xl text-2xl font-bold text-slate-100 sm:text-3xl">
+            Full-Stack Developer | Java, Spring Boot, Angular, React | AWS Cloud
+          </p>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-300 sm:text-xl">
-            Building scalable microservices and event-driven systems with Java, Spring Boot, and AWS.
+            Building secure APIs, CI/CD pipelines, microservices, REST APIs, and SQL-backed distributed systems for retail, telecom, and banking platforms.
           </p>
           <div className="mt-6 flex min-h-10 items-center font-mono text-lg font-bold text-cyan-200">
             <span className="mr-3 text-slate-500">&gt;</span>
@@ -354,8 +374,8 @@ function Hero() {
           <div className="mt-12 grid max-w-3xl grid-cols-3 gap-3">
             {[
               ["5+", "Years"],
-              ["35%", "Throughput gain"],
-              ["40%", "Delay reduction"]
+              ["1.3K+", "LinkedIn followers"],
+              ["500+", "Connections"]
             ].map(([value, label]) => (
               <div key={label} className="glass-card rounded-lg p-4 text-center">
                 <strong className="block font-heading text-2xl text-white sm:text-3xl">{value}</strong>
@@ -395,20 +415,25 @@ function About() {
     <section id="about" className="section-shell">
       <SectionHeading
         eyebrow="About Me"
-        title="Backend depth, product polish, and distributed-systems judgment."
-        copy="I design and deliver secure, observable, high-performance applications across retail, telecom, and banking environments."
+        title="Java full-stack delivery with cloud, security, and AI depth."
+        copy="I design secure, observable, high-performance applications across retail, telecom, banking, and workforce-management environments."
       />
       <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-[1.15fr_0.85fr]">
         <motion.article className="glass-card rounded-2xl p-7 sm:p-9" initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <p className="text-lg leading-9 text-slate-200">
-            I am a Senior Java Full Stack Developer with 5+ years of experience building Spring Boot microservices, REST APIs, event-driven Kafka pipelines, cloud deployments, and modern React and Angular front ends. My work focuses on reliability, scalability, and clean service boundaries.
+            I am a Java Full-Stack Developer with 5+ years of experience building Spring Boot microservices, REST APIs, secure authentication flows, event-driven Kafka pipelines, SQL-backed services, and modern React and Angular interfaces.
           </p>
           <p className="mt-5 text-lg leading-9 text-slate-300">
-            Recently, I have been integrating AI and LLM-powered workflows into enterprise systems, including recommendation services, RAG patterns, and automation that turns complex operational data into faster decisions.
+            My recent work combines AWS cloud services, Kubernetes, CI/CD, SonarQube, SageMaker, and Python-based ML inference APIs to improve throughput, reduce defects, personalize commerce experiences, and forecast demand.
           </p>
         </motion.article>
         <motion.div className="grid gap-5" initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-          {["Java + Spring Boot microservices", "AWS EKS, Lambda, S3, CloudWatch", "Kafka, Redis, event-driven architecture", "AI/LLM integration and RAG workflows"].map((item) => (
+          {[
+            "Java + Spring Boot secure microservices",
+            "Angular, React, TypeScript dashboards",
+            "AWS EKS, Lambda, S3, SageMaker, CloudWatch",
+            "Kafka, CI/CD, Docker, Kubernetes, SonarQube"
+          ].map((item) => (
             <div key={item} className="glass-card flex items-center gap-4 rounded-2xl p-5">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-white shadow-glow">
                 <CheckIcon />
@@ -435,8 +460,8 @@ function Skills() {
     <section id="skills" className="section-shell">
       <SectionHeading
         eyebrow="Skills"
-        title="A modern Java stack for cloud-native products."
-        copy="Categorized skills with practical depth across backend services, UI delivery, cloud platforms, data stores, and engineering automation."
+        title="LinkedIn-aligned skills for secure cloud-native systems."
+        copy="Categorized skills reflecting Java, Spring Boot, Angular, React, AWS Cloud, CI/CD, secure APIs, microservices, REST APIs, and SQL delivery."
       />
       <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 xl:grid-cols-3">
         {skills.map((skill, index) => {
@@ -486,8 +511,8 @@ function Experience() {
     <section id="experience" className="section-shell">
       <SectionHeading
         eyebrow="Experience"
-        title="Production systems across retail, telecom, and banking."
-        copy="A timeline of roles focused on service modernization, performance, cloud deployment, and reliable enterprise delivery."
+        title="Production impact across Costco, Virtusa, Citi, and Insight Global."
+        copy="A timeline of roles focused on throughput, conversion, fraud monitoring, service modernization, cloud deployment, and reliable enterprise delivery."
       />
       <div className="mx-auto max-w-5xl">
         <div className="relative">
@@ -542,8 +567,8 @@ function Projects() {
     <section id="projects" className="section-shell">
       <SectionHeading
         eyebrow="Projects"
-        title="Selected systems with measurable engineering impact."
-        copy="Project cards are shaped around production experience and ready to connect to GitHub or live demos when those URLs are available."
+        title="Selected systems inspired by live production work."
+        copy="Project cards now reflect LinkedIn experience across retail fulfillment, telecom billing, AI product intelligence, and secure banking/reporting platforms."
       />
       <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2">
         {projects.map((project, index) => {
@@ -593,7 +618,7 @@ function Projects() {
 function Achievements() {
   return (
     <section className="section-shell">
-      <SectionHeading eyebrow="Achievements" title="Certified, tested, and impact-oriented." />
+      <SectionHeading eyebrow="Credentials" title="Cloud, AI, software engineering, and graduate training." />
       <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-2">
         {achievements.map(([title, copy], index) => (
           <motion.article
@@ -628,7 +653,7 @@ function Contact() {
             Let&apos;s build the next reliable platform.
           </h2>
           <p className="mt-5 leading-8 text-slate-300">
-            Available for senior full stack Java roles focused on microservices, cloud modernization, distributed systems, and AI-enabled enterprise workflows.
+            Open to Java full-stack roles in West Des Moines and hybrid/on-site teams, with focus on secure APIs, AWS cloud, CI/CD, microservices, SQL, and AI-enabled enterprise workflows.
           </p>
           <div className="mt-8 grid gap-3">
             <a href="mailto:sandeepparangi97@gmail.com" className="contact-link">
