@@ -24,6 +24,8 @@ import {
 import { motion, useScroll, useSpring } from "framer-motion";
 
 const resumePath = "public/resume/sandeep-kumar-parangi-resume.pdf";
+const linkedInUrl = "https://www.linkedin.com/in/sandeep-kumar-parangi-05655b126/";
+const githubUrl = "https://github.com/sandeepkumarparangi";
 
 const navItems = [
   ["About", "about"],
@@ -342,6 +344,9 @@ function Hero() {
             <a href={resumePath} download className="button-secondary">
               <Download size={18} /> Download Resume
             </a>
+            <a href={linkedInUrl} target="_blank" rel="noreferrer" className="button-secondary">
+              <Linkedin size={18} /> LinkedIn Profile
+            </a>
             <a href="#contact" className="button-ghost">
               Contact Me
             </a>
@@ -559,7 +564,7 @@ function Projects() {
                     <Icon size={22} />
                   </div>
                   <div className="flex gap-2">
-                    <a href="https://github.com/" className="icon-button" aria-label={`${project.title} GitHub`}>
+                    <a href={githubUrl} target="_blank" rel="noreferrer" className="icon-button" aria-label={`${project.title} GitHub`}>
                       <Github size={17} />
                     </a>
                     <a href="#contact" className="icon-button" aria-label={`${project.title} live demo`}>
@@ -629,10 +634,10 @@ function Contact() {
             <a href="mailto:sandeepparangi97@gmail.com" className="contact-link">
               <Mail size={18} /> sandeepparangi97@gmail.com
             </a>
-            <a href="https://www.linkedin.com/in/sandeep-kumar-parangi-05655b126/" className="contact-link">
+            <a href={linkedInUrl} target="_blank" rel="noreferrer" className="contact-link">
               <Linkedin size={18} /> LinkedIn
             </a>
-            <a href="https://github.com/" className="contact-link">
+            <a href={githubUrl} target="_blank" rel="noreferrer" className="contact-link">
               <Github size={18} /> GitHub
             </a>
           </div>
@@ -672,10 +677,10 @@ function Contact() {
           <a href="mailto:sandeepparangi97@gmail.com" className="icon-button" aria-label="Email">
             <Mail size={17} />
           </a>
-          <a href="https://www.linkedin.com/in/sandeep-kumar-parangi-05655b126/" className="icon-button" aria-label="LinkedIn">
+          <a href={linkedInUrl} target="_blank" rel="noreferrer" className="icon-button" aria-label="LinkedIn">
             <Linkedin size={17} />
           </a>
-          <a href="https://github.com/" className="icon-button" aria-label="GitHub">
+          <a href={githubUrl} target="_blank" rel="noreferrer" className="icon-button" aria-label="GitHub">
             <Github size={17} />
           </a>
         </div>
