@@ -9,14 +9,19 @@ import {
   Cpu,
   Database,
   Download,
+  Edit3,
   Github,
   Layers3,
   Linkedin,
+  LogOut,
   Mail,
   Menu,
   Moon,
+  RotateCcw,
   Rocket,
+  Save,
   ServerCog,
+  ShieldCheck,
   Sun,
   X,
   Zap
@@ -26,6 +31,28 @@ import { motion, useScroll, useSpring } from "framer-motion";
 const resumePath = "public/resume/sandeep-kumar-parangi-resume.pdf";
 const linkedInUrl = "https://www.linkedin.com/in/sandeep-kumar-parangi-05655b126/";
 const githubUrl = "https://github.com/sandeepkumarparangi";
+const ownerStorageKey = "sandeep-portfolio-owner-profile";
+const ownerAccessCode = "sandeep2026";
+
+const defaultOwnerProfile = {
+  name: "Sandeep Kumar Parangi",
+  badge: "Open to work: West Des Moines | On-site & Hybrid",
+  headline: "Full-Stack Developer | Java, Spring Boot, Angular, React | AWS Cloud",
+  tagline:
+    "Building secure APIs, CI/CD pipelines, microservices, REST APIs, and SQL-backed distributed systems for retail, telecom, and banking platforms.",
+  aboutTitle: "Java full-stack delivery with cloud, security, and AI depth.",
+  aboutCopy:
+    "I design secure, observable, high-performance applications across retail, telecom, banking, and workforce-management environments.",
+  aboutPrimary:
+    "I am a Java Full-Stack Developer with 5+ years of experience building Spring Boot microservices, REST APIs, secure authentication flows, event-driven Kafka pipelines, SQL-backed services, and modern React and Angular interfaces.",
+  aboutSecondary:
+    "My recent work combines AWS cloud services, Kubernetes, CI/CD, SonarQube, SageMaker, and Python-based ML inference APIs to improve throughput, reduce defects, personalize commerce experiences, and forecast demand.",
+  contactCopy:
+    "Open to Java full-stack roles in West Des Moines and hybrid/on-site teams, with focus on secure APIs, AWS cloud, CI/CD, microservices, SQL, and AI-enabled enterprise workflows.",
+  email: "sandeepparangi97@gmail.com",
+  linkedin: linkedInUrl,
+  github: githubUrl
+};
 
 const navItems = [
   ["About", "about"],
@@ -204,6 +231,35 @@ function useTyping(words) {
   return words[wordIndex].slice(0, charIndex);
 }
 
+function getStoredOwnerProfile() {
+  try {
+    const saved = window.localStorage.getItem(ownerStorageKey);
+    return saved ? { ...defaultOwnerProfile, ...JSON.parse(saved) } : defaultOwnerProfile;
+  } catch {
+    return defaultOwnerProfile;
+  }
+}
+
+function useOwnerProfile() {
+  const [profile, setProfile] = useState(defaultOwnerProfile);
+
+  useEffect(() => {
+    setProfile(getStoredOwnerProfile());
+  }, []);
+
+  function saveProfile(nextProfile) {
+    setProfile(nextProfile);
+    window.localStorage.setItem(ownerStorageKey, JSON.stringify(nextProfile));
+  }
+
+  function resetProfile() {
+    setProfile(defaultOwnerProfile);
+    window.localStorage.removeItem(ownerStorageKey);
+  }
+
+  return { profile, saveProfile, resetProfile };
+}
+
 function Background() {
   const particles = useMemo(
     () =>
@@ -239,7 +295,7 @@ function Background() {
   );
 }
 
-function Navbar({ theme, setTheme }) {
+function Navbar({ theme, setTheme, profile }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -269,7 +325,7 @@ function Navbar({ theme, setTheme }) {
               SK
             </span>
             <span className="truncate font-heading text-sm font-bold tracking-normal text-white sm:text-base">
-              Sandeep Kumar Parangi
+              {profile.name}
             </span>
           </a>
 
@@ -331,7 +387,7 @@ function SectionHeading({ eyebrow, title, copy }) {
   );
 }
 
-function Hero() {
+function Hero({ profile }) {
   const typed = useTyping(typingWords);
 
   return (
@@ -341,16 +397,16 @@ function Hero() {
         <motion.div initial={{ opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="relative z-10">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100 shadow-glow backdrop-blur">
             <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_18px_rgba(110,231,183,0.9)]" />
-            Open to work: West Des Moines | On-site & Hybrid
+            {profile.badge}
           </div>
           <h1 className="max-w-5xl font-display text-5xl font-extrabold leading-[1.02] text-white sm:text-6xl lg:text-7xl">
-            Sandeep Kumar Parangi
+            {profile.name}
           </h1>
           <p className="mt-5 max-w-3xl text-2xl font-bold text-slate-100 sm:text-3xl">
-            Full-Stack Developer | Java, Spring Boot, Angular, React | AWS Cloud
+            {profile.headline}
           </p>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-300 sm:text-xl">
-            Building secure APIs, CI/CD pipelines, microservices, REST APIs, and SQL-backed distributed systems for retail, telecom, and banking platforms.
+            {profile.tagline}
           </p>
           <div className="mt-6 flex min-h-10 items-center font-mono text-lg font-bold text-cyan-200">
             <span className="mr-3 text-slate-500">&gt;</span>
@@ -364,7 +420,7 @@ function Hero() {
             <a href={resumePath} download className="button-secondary">
               <Download size={18} /> Download Resume
             </a>
-            <a href={linkedInUrl} target="_blank" rel="noreferrer" className="button-secondary">
+            <a href={profile.linkedin} target="_blank" rel="noreferrer" className="button-secondary">
               <Linkedin size={18} /> LinkedIn Profile
             </a>
             <a href="#contact" className="button-ghost">
@@ -410,21 +466,21 @@ function Hero() {
   );
 }
 
-function About() {
+function About({ profile }) {
   return (
     <section id="about" className="section-shell">
       <SectionHeading
         eyebrow="About Me"
-        title="Java full-stack delivery with cloud, security, and AI depth."
-        copy="I design secure, observable, high-performance applications across retail, telecom, banking, and workforce-management environments."
+        title={profile.aboutTitle}
+        copy={profile.aboutCopy}
       />
       <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-[1.15fr_0.85fr]">
         <motion.article className="glass-card rounded-2xl p-7 sm:p-9" initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <p className="text-lg leading-9 text-slate-200">
-            I am a Java Full-Stack Developer with 5+ years of experience building Spring Boot microservices, REST APIs, secure authentication flows, event-driven Kafka pipelines, SQL-backed services, and modern React and Angular interfaces.
+            {profile.aboutPrimary}
           </p>
           <p className="mt-5 text-lg leading-9 text-slate-300">
-            My recent work combines AWS cloud services, Kubernetes, CI/CD, SonarQube, SageMaker, and Python-based ML inference APIs to improve throughput, reduce defects, personalize commerce experiences, and forecast demand.
+            {profile.aboutSecondary}
           </p>
         </motion.article>
         <motion.div className="grid gap-5" initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
@@ -562,7 +618,7 @@ function Experience() {
   );
 }
 
-function Projects() {
+function Projects({ profile }) {
   return (
     <section id="projects" className="section-shell">
       <SectionHeading
@@ -589,7 +645,7 @@ function Projects() {
                     <Icon size={22} />
                   </div>
                   <div className="flex gap-2">
-                    <a href={githubUrl} target="_blank" rel="noreferrer" className="icon-button" aria-label={`${project.title} GitHub`}>
+                    <a href={profile.github} target="_blank" rel="noreferrer" className="icon-button" aria-label={`${project.title} GitHub`}>
                       <Github size={17} />
                     </a>
                     <a href="#contact" className="icon-button" aria-label={`${project.title} live demo`}>
@@ -643,7 +699,7 @@ function Achievements() {
   );
 }
 
-function Contact() {
+function Contact({ profile }) {
   return (
     <section id="contact" className="section-shell pb-10">
       <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.88fr_1.12fr]">
@@ -653,16 +709,16 @@ function Contact() {
             Let&apos;s build the next reliable platform.
           </h2>
           <p className="mt-5 leading-8 text-slate-300">
-            Open to Java full-stack roles in West Des Moines and hybrid/on-site teams, with focus on secure APIs, AWS cloud, CI/CD, microservices, SQL, and AI-enabled enterprise workflows.
+            {profile.contactCopy}
           </p>
           <div className="mt-8 grid gap-3">
-            <a href="mailto:sandeepparangi97@gmail.com" className="contact-link">
-              <Mail size={18} /> sandeepparangi97@gmail.com
+            <a href={`mailto:${profile.email}`} className="contact-link">
+              <Mail size={18} /> {profile.email}
             </a>
-            <a href={linkedInUrl} target="_blank" rel="noreferrer" className="contact-link">
+            <a href={profile.linkedin} target="_blank" rel="noreferrer" className="contact-link">
               <Linkedin size={18} /> LinkedIn
             </a>
-            <a href={githubUrl} target="_blank" rel="noreferrer" className="contact-link">
+            <a href={profile.github} target="_blank" rel="noreferrer" className="contact-link">
               <Github size={18} /> GitHub
             </a>
           </div>
@@ -673,7 +729,7 @@ function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="glass-card rounded-3xl p-7 sm:p-9"
-          action="mailto:sandeepparangi97@gmail.com"
+          action={`mailto:${profile.email}`}
           method="post"
           encType="text/plain"
         >
@@ -697,15 +753,15 @@ function Contact() {
         </motion.form>
       </div>
       <footer className="mx-auto mt-12 flex max-w-7xl flex-col items-center justify-between gap-4 border-t border-white/10 py-7 text-sm text-slate-400 sm:flex-row">
-        <p>© 2026 Sandeep Kumar Parangi. Built with React, Tailwind CSS, and Framer Motion.</p>
+        <p>© 2026 {profile.name}. Built with React, Tailwind CSS, and Framer Motion.</p>
         <div className="flex gap-2">
-          <a href="mailto:sandeepparangi97@gmail.com" className="icon-button" aria-label="Email">
+          <a href={`mailto:${profile.email}`} className="icon-button" aria-label="Email">
             <Mail size={17} />
           </a>
-          <a href={linkedInUrl} target="_blank" rel="noreferrer" className="icon-button" aria-label="LinkedIn">
+          <a href={profile.linkedin} target="_blank" rel="noreferrer" className="icon-button" aria-label="LinkedIn">
             <Linkedin size={17} />
           </a>
-          <a href={githubUrl} target="_blank" rel="noreferrer" className="icon-button" aria-label="GitHub">
+          <a href={profile.github} target="_blank" rel="noreferrer" className="icon-button" aria-label="GitHub">
             <Github size={17} />
           </a>
         </div>
@@ -714,8 +770,152 @@ function Contact() {
   );
 }
 
+function OwnerEditor({ profile, saveProfile, resetProfile }) {
+  const [open, setOpen] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [accessCode, setAccessCode] = useState("");
+  const [draft, setDraft] = useState(profile);
+  const [notice, setNotice] = useState("");
+
+  useEffect(() => {
+    setDraft(profile);
+  }, [profile]);
+
+  function updateField(field, value) {
+    setDraft((current) => ({ ...current, [field]: value }));
+  }
+
+  function unlockEditor(event) {
+    event.preventDefault();
+    if (accessCode === ownerAccessCode) {
+      setAuthenticated(true);
+      setNotice("Owner edit mode unlocked.");
+      return;
+    }
+    setNotice("Invalid owner code.");
+  }
+
+  function handleSave(event) {
+    event.preventDefault();
+    saveProfile(draft);
+    setNotice("Saved in this browser.");
+  }
+
+  function handleReset() {
+    resetProfile();
+    setDraft(defaultOwnerProfile);
+    setNotice("Reset to published defaults.");
+  }
+
+  function exportProfile() {
+    const payload = JSON.stringify(draft, null, 2);
+    navigator.clipboard?.writeText(payload);
+    setNotice("Profile JSON copied.");
+  }
+
+  return (
+    <div className="owner-editor">
+      <button type="button" className="owner-edit-button" onClick={() => setOpen((value) => !value)}>
+        {open ? <X size={18} /> : <Edit3 size={18} />}
+        <span>Owner Edit</span>
+      </button>
+
+      {open && (
+        <motion.aside
+          initial={{ opacity: 0, y: 18, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          className="owner-panel"
+        >
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">Owner</p>
+              <h2 className="mt-1 font-heading text-xl font-bold text-white">Portfolio editor</h2>
+            </div>
+            <button type="button" className="icon-button" onClick={() => setOpen(false)} aria-label="Close owner editor">
+              <X size={17} />
+            </button>
+          </div>
+
+          {!authenticated ? (
+            <form onSubmit={unlockEditor} className="mt-6">
+              <label className="field-label">
+                Owner code
+                <input
+                  value={accessCode}
+                  onChange={(event) => setAccessCode(event.target.value)}
+                  className="field-input"
+                  type="password"
+                  placeholder="Enter owner code"
+                />
+              </label>
+              <button type="submit" className="button-primary mt-4 w-full">
+                <ShieldCheck size={18} /> Unlock
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleSave} className="mt-6 grid gap-4">
+              {[
+                ["name", "Name", "input"],
+                ["badge", "Badge", "input"],
+                ["headline", "Headline", "textarea"],
+                ["tagline", "Tagline", "textarea"],
+                ["aboutTitle", "About title", "textarea"],
+                ["aboutCopy", "About subtitle", "textarea"],
+                ["aboutPrimary", "About paragraph 1", "textarea"],
+                ["aboutSecondary", "About paragraph 2", "textarea"],
+                ["contactCopy", "Contact copy", "textarea"],
+                ["email", "Email", "input"],
+                ["linkedin", "LinkedIn URL", "input"],
+                ["github", "GitHub URL", "input"]
+              ].map(([field, label, type]) => (
+                <label key={field} className="field-label">
+                  {label}
+                  {type === "textarea" ? (
+                    <textarea
+                      value={draft[field]}
+                      onChange={(event) => updateField(field, event.target.value)}
+                      className="field-input min-h-24 resize-y"
+                    />
+                  ) : (
+                    <input
+                      value={draft[field]}
+                      onChange={(event) => updateField(field, event.target.value)}
+                      className="field-input"
+                    />
+                  )}
+                </label>
+              ))}
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <button type="submit" className="button-primary">
+                  <Save size={18} /> Save
+                </button>
+                <button type="button" className="button-secondary" onClick={exportProfile}>
+                  <Download size={18} /> Export
+                </button>
+                <button type="button" className="button-ghost" onClick={handleReset}>
+                  <RotateCcw size={18} /> Reset
+                </button>
+                <button type="button" className="button-ghost" onClick={() => setAuthenticated(false)}>
+                  <LogOut size={18} /> Lock
+                </button>
+              </div>
+            </form>
+          )}
+
+          {notice && <p className="mt-4 rounded-lg border border-cyan-200/20 bg-cyan-300/10 px-4 py-3 text-sm font-semibold text-cyan-100">{notice}</p>}
+          <p className="mt-4 text-xs leading-6 text-slate-400">
+            Edits are saved in this browser. Export the JSON when you want to make the same content permanent in GitHub.
+          </p>
+        </motion.aside>
+      )}
+    </div>
+  );
+}
+
 function App() {
   const [theme, setTheme] = useState("dark");
+  const { profile, saveProfile, resetProfile } = useOwnerProfile();
 
   useEffect(() => {
     document.documentElement.classList.toggle("light", theme === "light");
@@ -725,16 +925,17 @@ function App() {
   return (
     <>
       <Background />
-      <Navbar theme={theme} setTheme={setTheme} />
+      <Navbar theme={theme} setTheme={setTheme} profile={profile} />
       <main>
-        <Hero />
-        <About />
+        <Hero profile={profile} />
+        <About profile={profile} />
         <Skills />
         <Experience />
-        <Projects />
+        <Projects profile={profile} />
         <Achievements />
-        <Contact />
+        <Contact profile={profile} />
       </main>
+      <OwnerEditor profile={profile} saveProfile={saveProfile} resetProfile={resetProfile} />
     </>
   );
 }
