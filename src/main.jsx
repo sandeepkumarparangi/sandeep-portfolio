@@ -10,6 +10,7 @@ import {
   Database,
   Download,
   Edit3,
+  FileText,
   Github,
   Layers3,
   Linkedin,
@@ -23,6 +24,7 @@ import {
   ServerCog,
   ShieldCheck,
   Sun,
+  Upload,
   X,
   Zap
 } from "lucide-react";
@@ -258,6 +260,162 @@ function useOwnerProfile() {
   }
 
   return { profile, saveProfile, resetProfile };
+}
+
+function cleanResumeText(text) {
+  return text
+    .replace(/\u0000/g, " ")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function getResumeLines(text) {
+  return cleanResumeText(text)
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+function findSection(text, labels) {
+  const lines = getResumeLines(text);
+  const startIndex = lines.findIndex((line) => labels.some((label) => line.toLowerCase().includes(label)));
+  if (startIndex === -1) return "";
+
+  const stopLabels = [
+    "experience",
+    "employment",
+    "education",
+    "skills",
+    "projects",
+    "certifications",
+    "achievements",
+    "summary",
+    "profile"
+  ];
+  const collected = [];
+  for (let index = startIndex + 1; index < lines.length; index += 1) {
+    const lower = lines[index].toLowerCase();
+    if (collected.length && stopLabels.some((label) => lower === label || lower.startsWith(`${label} `))) break;
+    collected.push(lines[index]);
+    if (collected.join(" ").length > 700) break;
+  }
+  return collected.join(" ");
+}
+
+function pickName(lines, fallback) {
+  const blocked = /resume|summary|profile|developer|engineer|email|phone|linkedin|github|java|spring|aws/i;
+  return lines.find((line) => line.length >= 5 && line.length <= 48 && !blocked.test(line)) || fallback;
+}
+
+function pickHeadline(lines, fallback) {
+  return (
+    lines.find((line) => /java|spring|full.?stack|developer|engineer|aws|react|angular/i.test(line) && line.length <= 120) ||
+    fallback
+  );
+}
+
+function pickTopSkills(text) {
+  const keywords = [
+    "Java",
+    "Spring Boot",
+    "Spring MVC",
+    "Microservices",
+    "REST APIs",
+    "Angular",
+    "React",
+    "TypeScript",
+    "JavaScript",
+    "AWS",
+    "EKS",
+    "Lambda",
+    "S3",
+    "Kafka",
+    "Docker",
+    "Kubernetes",
+    "Jenkins",
+    "CI/CD",
+    "MySQL",
+    "PostgreSQL",
+    "Oracle",
+    "SQL Server",
+    "DynamoDB",
+    "SageMaker",
+    "Generative AI",
+    "LLM",
+    "RAG"
+  ];
+  const lower = text.toLowerCase();
+  return keywords.filter((keyword) => lower.includes(keyword.toLowerCase())).slice(0, 9);
+}
+
+function pickCompanies(text) {
+  return ["Costco", "Virtusa", "British Telecom", "Citi", "Insight Global"].filter((company) =>
+    text.toLowerCase().includes(company.toLowerCase())
+  );
+}
+
+function buildResumeProfile(text, currentProfile) {
+  const cleaned = cleanResumeText(text);
+  const lines = getResumeLines(cleaned);
+  const email = cleaned.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0] || currentProfile.email;
+  const linkedin = cleaned.match(/https?:\/\/(?:www\.)?linkedin\.com\/in\/[^\s)]+/i)?.[0] || currentProfile.linkedin;
+  const github = cleaned.match(/https?:\/\/(?:www\.)?github\.com\/[^\s)]+/i)?.[0] || currentProfile.github;
+  const years = cleaned.match(/(\d+\+?)\s*(?:years|yrs)/i)?.[1] || "5+";
+  const skillsFromText = pickTopSkills(cleaned);
+  const companies = pickCompanies(cleaned);
+  const summary = findSection(cleaned, ["professional summary", "summary", "profile"]);
+  const location = cleaned.match(/West Des Moines|Iowa|Des Moines|United States|USA/i)?.[0];
+  const name = pickName(lines, currentProfile.name);
+  const headline = pickHeadline(lines, currentProfile.headline);
+  const skillsPhrase = skillsFromText.length ? skillsFromText.slice(0, 6).join(", ") : "Java, Spring Boot, React, Angular, AWS, and SQL";
+  const companyPhrase = companies.length ? companies.join(", ") : "enterprise product teams";
+
+  return {
+    ...currentProfile,
+    name,
+    badge: location ? `Open to work: ${location} | On-site & Hybrid` : currentProfile.badge,
+    headline,
+    tagline: `Building secure, scalable software with ${skillsPhrase} across ${companyPhrase}.`,
+    aboutTitle: `${years} years of Java full-stack delivery across cloud, APIs, and distributed systems.`,
+    aboutCopy: summary || currentProfile.aboutCopy,
+    aboutPrimary:
+      summary ||
+      `I am a Java Full-Stack Developer with ${years} years of experience building Spring Boot microservices, REST APIs, secure backend workflows, event-driven integrations, and modern React and Angular interfaces.`,
+    aboutSecondary: `My resume highlights ${skillsPhrase}, with delivery across ${companyPhrase}. I focus on clean service boundaries, production reliability, CI/CD, SQL-backed systems, and cloud-ready architecture.`,
+    contactCopy: `Open to roles aligned with ${skillsPhrase}. Reach out for full-stack Java, cloud, microservices, secure API, and enterprise platform opportunities.`,
+    email,
+    linkedin,
+    github
+  };
+}
+
+async function extractPdfText(arrayBuffer) {
+  if (!window.pdfjsLib) throw new Error("PDF parser is still loading. Please try again.");
+  window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  const pdf = await window.pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) }).promise;
+  const pages = [];
+  for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+    const page = await pdf.getPage(pageNumber);
+    const content = await page.getTextContent();
+    pages.push(content.items.map((item) => item.str).join(" "));
+  }
+  return pages.join("\n");
+}
+
+async function extractResumeText(file) {
+  const extension = file.name.split(".").pop()?.toLowerCase();
+  if (extension === "txt") return file.text();
+
+  const arrayBuffer = await file.arrayBuffer();
+  if (extension === "docx") {
+    if (!window.mammoth) throw new Error("DOCX parser is still loading. Please try again.");
+    const result = await window.mammoth.extractRawText({ arrayBuffer });
+    return result.value;
+  }
+  if (extension === "pdf") return extractPdfText(arrayBuffer);
+
+  throw new Error("Please upload a .docx, .pdf, or .txt resume.");
 }
 
 function Background() {
@@ -776,6 +934,7 @@ function OwnerEditor({ profile, saveProfile, resetProfile }) {
   const [accessCode, setAccessCode] = useState("");
   const [draft, setDraft] = useState(profile);
   const [notice, setNotice] = useState("");
+  const [isImportingResume, setIsImportingResume] = useState(false);
 
   useEffect(() => {
     setDraft(profile);
@@ -811,6 +970,25 @@ function OwnerEditor({ profile, saveProfile, resetProfile }) {
     const payload = JSON.stringify(draft, null, 2);
     navigator.clipboard?.writeText(payload);
     setNotice("Profile JSON copied.");
+  }
+
+  async function importResume(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsImportingResume(true);
+    setNotice(`Reading ${file.name}...`);
+    try {
+      const resumeText = await extractResumeText(file);
+      const nextDraft = buildResumeProfile(resumeText, draft);
+      setDraft(nextDraft);
+      setNotice("Resume imported. Review the fields, then click Save.");
+    } catch (error) {
+      setNotice(error.message || "Could not import this resume.");
+    } finally {
+      setIsImportingResume(false);
+      event.target.value = "";
+    }
   }
 
   return (
@@ -854,6 +1032,21 @@ function OwnerEditor({ profile, saveProfile, resetProfile }) {
             </form>
           ) : (
             <form onSubmit={handleSave} className="mt-6 grid gap-4">
+              <div className="resume-import-card">
+                <div>
+                  <p className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-cyan-300">Resume sync</p>
+                  <h3 className="mt-1 font-heading text-lg font-bold text-white">Update content from resume</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-300">
+                    Upload a `.docx`, `.pdf`, or `.txt` resume. The page extracts text in your browser and refreshes the editable draft.
+                  </p>
+                </div>
+                <label className="resume-import-button">
+                  {isImportingResume ? <FileText size={18} /> : <Upload size={18} />}
+                  <span>{isImportingResume ? "Importing..." : "Import Resume"}</span>
+                  <input type="file" accept=".docx,.pdf,.txt" onChange={importResume} disabled={isImportingResume} />
+                </label>
+              </div>
+
               {[
                 ["name", "Name", "input"],
                 ["badge", "Badge", "input"],

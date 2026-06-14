@@ -260,6 +260,48 @@ textarea {
   border-radius: 999px;
 }
 
+.resume-import-card {
+  display: grid;
+  gap: 1rem;
+  border: 1px solid rgba(103, 232, 249, 0.18);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(124, 58, 237, 0.1)),
+    rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+}
+
+.resume-import-button {
+  position: relative;
+  display: inline-flex;
+  min-height: 3rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  overflow: hidden;
+  border: 1px solid rgba(186, 230, 253, 0.28);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ecfeff;
+  padding: 0.75rem 1rem;
+  font-weight: 850;
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+
+.resume-import-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(186, 230, 253, 0.62);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.resume-import-button input {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  opacity: 0;
+}
+
 .particle {
   position: absolute;
   width: 3px;
